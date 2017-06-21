@@ -1,0 +1,14 @@
+{
+    "name": "popov/magento-admitad-catalog-export",
+    "type": "magento-module",
+    "license":"MIT Licence",
+    "description":"Export feed for Admitad based on Mirasvit_CatalogExport",
+    "authors":[{
+        "name":"Serhii Popov",
+        "email":"popow.sergiy@gmail.com"
+    }],
+    "extra": {
+        "map": [
+		]
+    }
+}
