@@ -1,17 +1,17 @@
 <?php
 
-class Popov_AdmitadExport_Model_Handler_Admitad extends Mirasvit_CatalogExport_Model_Handler_Abstract
+class Popov_AdmitadExport_Model_Handler_Admitad extends Mirasvit_CatalogExport_Model_Handler_Yml
 {
-    protected $_xml;
-	protected $_attr = array();
-	protected $_category_name = array();	
+    //protected $_xml;
+	//protected $_attr = array();
+	//protected $_category_name = array();
 
     public function getName()
     {
         return Mage::helper('catalogexport')->__('Extended Yandex.Market (YML)');
     }
 
-    public function getIdentifier()
+    /*public function getIdentifier()
     {
         return __CLASS__;
     }
@@ -143,7 +143,7 @@ class Popov_AdmitadExport_Model_Handler_Admitad extends Mirasvit_CatalogExport_M
     public function trim_value(&$value)
     {
         $value = trim($value);
-    }
+    }*/
 			
     protected function getOfferElement($product, $configurable = false)
     {
@@ -173,7 +173,9 @@ class Popov_AdmitadExport_Model_Handler_Admitad extends Mirasvit_CatalogExport_M
         $prepareNeedAttribute = explode(',', $stringAttributes);
 
         foreach($prepareNeedAttribute as $attr){
-			$this->getParamElement($element, $attr, $product, $configurable);
+            if ($attr = trim($attr)) {
+                $this->getParamElement($element, $attr, $product, $configurable);
+            }
 		}
         if ($ok) {
             return $element;
@@ -182,22 +184,25 @@ class Popov_AdmitadExport_Model_Handler_Admitad extends Mirasvit_CatalogExport_M
 	
     public function changeProductName($_product)
     {
-        $_cat_name = $this->getLastCategoryName($_product);
-        $brand = $this->getProductBrand($_product);
-        $new_name = $_cat_name . ' ' . $brand . ' ' . $_product->getName();
-        $_product->setData("name", $new_name, false);
+        $names['category'] = $this->getLastCategoryName($_product);
+        $names['brand'] = $this->getProductBrand($_product);
+        $names['product'] = $_product->getName();
+        $newName = implode(' ', array_filter($names));
+        $_product->setData('name', $newName, false);
 		
 		return $_product;
     }
 	
 	public function getProductBrand($_product)
     {
-        return $_product->getAttributeText('brand');
+        if ($_product->getData('brand')) {
+            return $_product->getAttributeText('brand');
+        }
     }
 	
 	public function getLastCategoryName($_product)
     {
-        if($cat_ids = array_reverse($_product->getCategoryIds())){
+        if ($cat_ids = array_reverse($_product->getCategoryIds())) {
             $index = 1;
             foreach($cat_ids as $cat_id){
                 $parent_cat = Mage::getModel('catalog/category')->load($cat_id);
@@ -221,7 +226,7 @@ class Popov_AdmitadExport_Model_Handler_Admitad extends Mirasvit_CatalogExport_M
         return '';
     }
 	
-	protected function getParamElement($to, $attr, $product, $configurable)
+	/*protected function getParamElement($to, $attr, $product, $configurable)
     {
 		if(($attr == 'razmer') && $configurable){
 			$value = $this->_esc($configurable->getAttributeText ($attr));
@@ -233,7 +238,7 @@ class Popov_AdmitadExport_Model_Handler_Admitad extends Mirasvit_CatalogExport_M
 					$value = 1;
 				} else {
 					$value = '0';
-				}				
+				}
 			} else {
 				$value = 1;
 			}
@@ -250,7 +255,7 @@ class Popov_AdmitadExport_Model_Handler_Admitad extends Mirasvit_CatalogExport_M
 					$element2 = $this->_xml->createElement('param', 'Цвет для фильтра');
 				}
 			}
-			
+
 			$ok = true;
 			if($label = $this->getAttributeLabel($attr)){
 				if($attr == 'razmer'){
@@ -268,12 +273,12 @@ class Popov_AdmitadExport_Model_Handler_Admitad extends Mirasvit_CatalogExport_M
 			} else {
 				$ok = false;
 			}
-			
+
 			if ($ok) {
 				$to->appendChild($element);
 			}
 		}
-		
+
 		if($attr == 'stock'){
 			$element = $this->_xml->createElement('param', $value);
 			$element->setAttribute('name', 'stock');
@@ -339,9 +344,9 @@ class Popov_AdmitadExport_Model_Handler_Admitad extends Mirasvit_CatalogExport_M
         }
 
         return true;
-    }
+    }*/
 
-    protected function appendOfferPriceElement($to, $product)
+    /*protected function appendOfferPriceElement($to, $product)
     {
         $base    = Mage::app()->getStore()->getBaseCurrency()->getCurrencyCode();
         $default = Mage::app()->getStore()->getDefaultCurrency()->getCurrencyCode();
@@ -398,7 +403,6 @@ class Popov_AdmitadExport_Model_Handler_Admitad extends Mirasvit_CatalogExport_M
             $to->appendChild($element);
         }
 		
-		$arrayImages=array();
 		$attributes = $product->getTypeInstance(true)->getSetAttributes($product);
 		$media_gallery = $attributes['media_gallery'];
 		$backend = $media_gallery->getBackend();
@@ -411,9 +415,9 @@ class Popov_AdmitadExport_Model_Handler_Admitad extends Mirasvit_CatalogExport_M
         } 
 
         return true;
-    }
+    }*/
 
-    protected function appendOfferNameElement($to, $product)
+    /*protected function appendOfferNameElement($to, $product)
     {
         $element = $this->_xml->createElement('name', $this->_esc($product->getData('name')));
         $to->appendChild($element);
@@ -437,9 +441,9 @@ class Popov_AdmitadExport_Model_Handler_Admitad extends Mirasvit_CatalogExport_M
         }
 
         return true;
-    }
-	
-	protected function generateStockXml()
+    }*/
+
+    /*protected function generateStockXml()
     {
         $dom         = new DOMImplementation();
         $doctype     = $dom->createDocumentType('yml_catalog SYSTEM "shops.dtd"');
@@ -501,5 +505,5 @@ class Popov_AdmitadExport_Model_Handler_Admitad extends Mirasvit_CatalogExport_M
         $this->_xml->appendChild($catalog);
 
         return $this->_xml->saveXML();
-    }
+    }*/
 }
