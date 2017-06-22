@@ -9,6 +9,8 @@
     }],
     "extra": {
         "map": [
+          ["app/etc/modules/Popov_AdmitadExport.xml", "app/etc/modules/Popov_AdmitadExport.xml"],
+          ["app/code/community/Popov/AdmitadExport/", "app/code/community/Popov/AdmitadExport/"]
 		]
     }
 }

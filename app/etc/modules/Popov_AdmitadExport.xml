@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Popov_AdmitadExport>
+			<active>true</active>
+			<codePool>community</codePool>
+			<depends>
+				<Mirasvit_CatalogExport />
+			</depends>
+		</Popov_AdmitadExport>
+	</modules>
+</config>
