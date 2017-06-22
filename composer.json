@@ -9,9 +9,6 @@
       "email": "popow.sergiy@gmail.com"
     }
   ],
-  "require": {
-    "agere/mirasvit-catalog-export": "dev-master"
-  },
   "extra": {
     "map": [
       ["app/etc/modules/Popov_AdmitadExport.xml", "app/etc/modules/Popov_AdmitadExport.xml"],
