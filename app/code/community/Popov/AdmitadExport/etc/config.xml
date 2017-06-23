@@ -6,50 +6,12 @@
 		</Popov_AdmitadExport>
 	</modules>
 	<global>
-		<!--<models>
-			<catalogexport>
-				<class>Popov_AdmitadExport_Model</class>
-				<resourceModel>catalogexport_resource</resourceModel>
-			</catalogexport>
-			<catalogexport_resource>
-				<class>Popov_AdmitadExport_Model_Resource</class>
-				<entities>
-					<catalogexport>
-						<table>m_catalogexport</table>
-					</catalogexport>
-				</entities>
-			</catalogexport_resource>
-		</models>
-		<resources>
-			<catalogexport_setup>
-				<setup>
-					<module>Popov_AdmitadExport</module>
-				</setup>
-			</catalogexport_setup>
-		</resources>
-		-->
-
 		<helpers>
 			<popov_admitadExport>
 				<class>Popov_AdmitadExport_Helper</class>
 			</popov_admitadExport>
 		</helpers>
 	</global>
-
-	<!--
-	<crontab>
-        <jobs>
-            <catalogexport_job>
-                <schedule>
-                    <config_path>catalogexport/settings/frequency</config_path>
-                </schedule>
-                <run>
-                    <model>catalogexport/observer::process</model>
-                </run>
-            </catalogexport_job>
-        </jobs>
-    </crontab>
-    -->
 	<catalogexport>
 		<handlers>
 			<admitad_xml>

@@ -185,7 +185,7 @@ class Popov_AdmitadExport_Model_Handler_Admitad extends Mirasvit_CatalogExport_M
     public function changeProductName($_product)
     {
         $names['category'] = $this->getLastCategoryName($_product);
-        $names['brand'] = $this->getProductBrand($_product);
+        $names['manufacturer'] = $this->getProductBrand($_product);
         $names['product'] = $_product->getName();
         $newName = implode(' ', array_filter($names));
         $_product->setData('name', $newName, false);
@@ -195,8 +195,9 @@ class Popov_AdmitadExport_Model_Handler_Admitad extends Mirasvit_CatalogExport_M
 	
 	public function getProductBrand($_product)
     {
-        if ($_product->getData('brand')) {
-            return $_product->getAttributeText('brand');
+        // @TODO Get "brand" attribute name from configuration
+        if ($_product->getData('manufacturer')) {
+            return $_product->getAttributeText('manufacturer');
         }
     }
 	
@@ -431,17 +432,17 @@ class Popov_AdmitadExport_Model_Handler_Admitad extends Mirasvit_CatalogExport_M
         $to->appendChild($element);
 
         return true;
-    }
+    }*/
 
     protected function appendOfferVendorElement($to, $product)
     {
-        if ($product->getData('brand')) {
-            $element = $this->_xml->createElement('vendor', $this->_esc($product->getAttributeText('brand')));
+        if ($product->getData('manufacturer')) {
+            $element = $this->_xml->createElement('vendor', $this->_esc($product->getAttributeText('manufacturer')));
             $to->appendChild($element);
         }
 
         return true;
-    }*/
+    }
 
     /*protected function generateStockXml()
     {
