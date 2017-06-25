@@ -11,12 +11,12 @@ class Popov_AdmitadExport_Model_Handler_Admitad extends Mirasvit_CatalogExport_M
         return Mage::helper('catalogexport')->__('Extended Yandex.Market (YML)');
     }
 
-    /*public function getIdentifier()
+    public function getIdentifier()
     {
         return __CLASS__;
     }
 
-    protected function _execute()
+    /*protected function _execute()
     {
         $content = $this->generateXml();
 		$content2 = $this->generateStockXml();
@@ -227,10 +227,10 @@ class Popov_AdmitadExport_Model_Handler_Admitad extends Mirasvit_CatalogExport_M
         return '';
     }
 	
-	/*protected function getParamElement($to, $attr, $product, $configurable)
+	protected function getParamElement($to, $attr, $product, $configurable)
     {
-		if(($attr == 'razmer') && $configurable){
-			$value = $this->_esc($configurable->getAttributeText ($attr));
+		if(($attr == 'razmer') && $configurable && $configurable->getData($attr)){
+			$value = $this->_esc($configurable->getAttributeText($attr));
 		} else if($attr == 'pol'){
 			$value = 'для женщин';
 		} else if($attr == 'stock'){
@@ -243,7 +243,7 @@ class Popov_AdmitadExport_Model_Handler_Admitad extends Mirasvit_CatalogExport_M
 			} else {
 				$value = 1;
 			}
-		} else {
+		} elseif ($product->getData($attr)) {
 			$value = $this->_esc($product->getAttributeText($attr));
 		}
 
@@ -287,7 +287,7 @@ class Popov_AdmitadExport_Model_Handler_Admitad extends Mirasvit_CatalogExport_M
 		}
     }
 	
-	protected function getAttributeLabel($attr)
+	/*protected function getAttributeLabel($attr)
 	{
 		if(!isset($this->_attr[$attr])){
 			$attribute_details = Mage::getSingleton("eav/config")->getAttribute('catalog_product', $attr);
@@ -300,17 +300,19 @@ class Popov_AdmitadExport_Model_Handler_Admitad extends Mirasvit_CatalogExport_M
 		
 		return $this->_attr[$attr]['frontend_label'];
 		
-	}
+	}*/
 	
 	protected function appendOfferCountryElement($to, $product)
     {
-        $element = $this->_xml->createElement('country_of_origin', $this->_esc($product->getAttributeText('shoes_country')));
-        $to->appendChild($element);
+		if ($product->getData('shoes_country')) {
+			$element = $this->_xml->createElement('country_of_origin', $this->_esc($product->getAttributeText('shoes_country')));
+			$to->appendChild($element);
+		}
 
         return true;
     }
 
-    protected function appendOfferUrlElement($to, $product)
+    /*protected function appendOfferUrlElement($to, $product)
     {
         $suffix = '';
         if ($this->getIsTraceGa()) {
@@ -424,15 +426,17 @@ class Popov_AdmitadExport_Model_Handler_Admitad extends Mirasvit_CatalogExport_M
         $to->appendChild($element);
 
         return true;
-    }
+    }*/
 
     protected function appendOfferDescriptionElement($to, $product)
     {
-        $element = $this->_xml->createElement('description', $this->_esc($product->getData('description')));
-        $to->appendChild($element);
+		if ($product->getData('description')) {
+			$element = $this->_xml->createElement('description', $this->_esc($product->getData('description')));
+			$to->appendChild($element);
+		}
 
         return true;
-    }*/
+    }
 
     protected function appendOfferVendorElement($to, $product)
     {
